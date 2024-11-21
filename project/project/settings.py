@@ -7,12 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-c+6=vww6qvqq8=bvhvvl^&r^@!7z93n$zavdtuwcdcwe&w^dhf"
 
 import os
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
-
-# Alternatively, explicitly hardcode for production
-if os.getenv('RAILWAY_ENVIRONMENT') == 'production':
-    DEBUG = False
-
+DEBUG = os.getenv("DEBUG", "True").lower() in ("true", "1")
 # DEBUG = False
 
 # ALLOWED_HOSTS = ["*"]
