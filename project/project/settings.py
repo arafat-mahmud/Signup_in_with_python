@@ -6,8 +6,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "django-insecure-c+6=vww6qvqq8=bvhvvl^&r^@!7z93n$zavdtuwcdcwe&w^dhf"
 
+import os
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-DEBUG = False
+# Alternatively, explicitly hardcode for production
+if os.getenv('RAILWAY_ENVIRONMENT') == 'production':
+    DEBUG = False
+
+# DEBUG = False
 
 # ALLOWED_HOSTS = ["*"]
 ALLOWED_HOSTS = ['arafat.up.railway.app', '127.0.0.1']
