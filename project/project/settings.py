@@ -9,8 +9,8 @@ SECRET_KEY = "django-insecure-c+6=vww6qvqq8=bvhvvl^&r^@!7z93n$zavdtuwcdcwe&w^dhf
 
 DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
-
+# ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['arafat.up.railway.app', 'localhost', '127.0.0.1']
 
 # Application definition
 
@@ -98,3 +98,14 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+
+
+
+# =====
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://arafat.up.railway.app',
+    'http://arafat.up.railway.app',  # Add this for non-HTTPS access
+]
