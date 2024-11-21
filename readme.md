@@ -10,3 +10,8 @@ python3 manage.py runserver
 # DEBUG = False if css is not working- 
 python manage.py collectstatic
 python manage.py runserver --insecure
+
+# ensure Debug = true. 
+# urls.py add:
+# if settings.DEBUG:
+#    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
