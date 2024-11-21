@@ -10,7 +10,7 @@ SECRET_KEY = "django-insecure-c+6=vww6qvqq8=bvhvvl^&r^@!7z93n$zavdtuwcdcwe&w^dhf
 DEBUG = False
 
 # ALLOWED_HOSTS = ["*"]
-ALLOWED_HOSTS = ['arafat.up.railway.app', '127.0.0.1']
+ALLOWED_HOSTS = ['arafat.up.railway.app', '127.0.0.1:8000']
 
 # Application definition
 
