@@ -4,3 +4,4 @@ source env/bin/activate
 pip install django
 cd project
 python3 manage.py runserver
+
