@@ -1,78 +1,99 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="{% static 'assets/styles.css' %}" />
-  </head>
-  <body>
-    <div class="form-container">
-      <div class="form-box">
-        <h2>Sign Up</h2>
-        <div class="messages">
-          {% for message in messages %}
-          <div class="alert {{ message.tags }}">
-            {{ message }}
-          </div>
-          {% endfor %}
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="{% static 'assets/styles.css' %}" />
+</head>
+
+<body>
+  <div class="form-container">
+    <div class="form-box">
+      <h2>Sign Up</h2>
+      <div class="messages">
+        {% for message in messages %}
+        <div class="alert {{ message.tags }}">
+          {{ message }}
         </div>
-        <form id="signup-form" action="#" method="post">
-          {% csrf_token %}
-          <div class="input-box">
-            <label for="signup-name">Name</label>
-            <input type="text" id="signup-name" name="name" placeholder="Enter your name" required />
-          </div>
-          <div class="input-box">
-            <label for="signup-email">Email</label>
-            <input type="email" id="signup-email" name="email" placeholder="Enter your email" required />
-          </div>
-          <div class="input-box">
-            <label for="signup-password">Password</label>
-            <input type="password" id="signup-password" name="password" placeholder="Create a password" required />
-          </div>
-          <div class="input-box">
-            <label for="confirm-password">Confirm Password</label>
-            <input type="password" id="confirm-password" name="confirm_password" placeholder="Confirm your password" required />
-          </div>
-          <button type="submit" class="btn">Sign Up</button>
-        </form>
-        <p class="link">
-          Already have an account? <a href="{% url 'login' %}">Login</a>
-        </p>
+        {% endfor %}
       </div>
+      <form id="signup-form" action="#" method="post">
+        {% csrf_token %}
+        <div class="input-box">
+          <label for="signup-name">Name</label>
+          <input type="text" id="signup-name" name="name" placeholder="Enter your name" required />
+        </div>
+        <div class="input-box">
+          <label for="signup-email">Email</label>
+          <input type="email" id="signup-email" name="email" placeholder="Enter your email" required />
+        </div>
+        <div class="input-box">
+          <label for="signup-password">Password</label>
+          <input type="password" id="signup-password" name="password" placeholder="Create a password" required />
+        </div>
+        <div class="input-box">
+          <label for="confirm-password">Confirm Password</label>
+          <input type="password" id="confirm-password" name="confirm_password" placeholder="Confirm your password"
+            required />
+        </div>
+        <button type="submit" class="btn">Sign Up</button>
+      </form>
+      <p class="link">
+        Already have an account? <a href="{% url 'login' %}">Login</a>
+      </p>
     </div>
+  </div>
 
-    <script>
-      document.getElementById('signup-form').addEventListener('submit', async (event) => {
-        event.preventDefault(); // Prevent default form submission
+  <script>
+    document.getElementById('signup-form').addEventListener('submit', async (event) => {
+      event.preventDefault(); // Prevent default form submission
 
-        const emailInput = document.getElementById('signup-email');
-        const emailValue = emailInput.value;
+      const emailInput = document.getElementById('signup-email');
+      const emailValue = emailInput.value;
 
-        const apiKey = 'e8d92adc8a694a29a5feb8e96f3be674'; // Replace with your Email Validation API key
-        const apiURL = `https://emailvalidation.abstractapi.com/v1/?api_key=${apiKey}&email=${emailValue}`;
+      const passwordInput = document.getElementById('signup-password');
+      const confirmPasswordInput = document.getElementById('confirm-password');
+      const passwordValue = passwordInput.value;
+      const confirmPasswordValue = confirmPasswordInput.value;
 
-        try {
-          const response = await fetch(apiURL);
-          const data = await response.json();
+      // Check if passwords match
+      if (passwordValue !== confirmPasswordValue) {
+        alert('Passwords do not match. Please try again.');
+        passwordInput.style.border = '1px solid red';
+        confirmPasswordInput.style.border = '1px solid red';
+        return; // Stop form submission
+      } else {
+        // Reset border if passwords match
+        passwordInput.style.border = '';
+        confirmPasswordInput.style.border = '';
+      }
 
-          // Check if the email is valid and deliverable
-          if (!data.deliverability || data.deliverability !== 'DELIVERABLE') {
-            alert('You are not Abul! Please enter a valid email!');
-            emailInput.style.border = '1px solid red'; // Highlight invalid email
-            return; // Stop form submission
-          } else {
-            emailInput.style.border = ''; // Reset border for valid email
-            event.target.submit(); // Submit the form if email is valid
-          }
-        } catch (error) {
-          console.error('Error verifying email address:', error);
-          alert('Could not verify the email address. Please try again later.');
+      const apiKey = 'e8d92adc8a694a29a5feb8e96f3be674'; // Replace with your Email Validation API key
+      const apiURL = `https://emailvalidation.abstractapi.com/v1/?api_key=${apiKey}&email=${emailValue}`;
+
+      try {
+        const response = await fetch(apiURL);
+        const data = await response.json();
+
+        // Check if the email is valid and deliverable
+        if (!data.deliverability || data.deliverability !== 'DELIVERABLE') {
+          alert('You are not Abul! Please enter a valid email!');
+          emailInput.style.border = '1px solid red'; // Highlight invalid email
           return; // Stop form submission
+        } else {
+          emailInput.style.border = ''; // Reset border for valid email
+          event.target.submit(); // Submit the form if email is valid
         }
-      });
-    </script>
-  </body>
+      } catch (error) {
+        console.error('Error verifying email address:', error);
+        alert('Could not verify the email address. Please try again later.');
+        return; // Stop form submission
+      }
+    });
+  </script>
+</body>
+
 </html>
