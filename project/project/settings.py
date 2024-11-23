@@ -109,3 +109,5 @@ CSRF_TRUSTED_ORIGINS = [
     'https://arafat.up.railway.app',
     
 ]
+
+
